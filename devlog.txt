@@ -23,3 +23,4 @@ https://flutter.dev/docs/get-started/install/macos
     Profile or release runs
 
   Write your first Flutter app, part 1
+  Write your first Flutter app, part 2

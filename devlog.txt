@@ -1,0 +1,26 @@
+Ran the guide here
+
+https://flutter.dev/docs/get-started/install/macos
+  Get the Flutter SDK
+  Run flutter doctor
+  Set up the iOS simulator
+  Create and run a simple Flutter app
+
+  *** SKIPPED ***
+    Deploy to iOS devices
+    Set up your Android device
+    Set up the Android emulator
+
+  Set up an editor
+    Visual Studio Code
+
+  Test drive
+    Create the app
+    Run the app
+    Try hot reload
+
+  *** SKIPPED ***
+    Profile or release runs
+
+  Write your first Flutter app, part 1
+  Write your first Flutter app, part 2

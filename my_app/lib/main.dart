@@ -3,7 +3,10 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
+//import 'package:english_words/english_words.dart';
+
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
@@ -11,15 +14,71 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
+      title: 'Http request test',
       theme: ThemeData(
-        primaryColor: Colors.white,
+        primaryColor: Colors.green,
       ),
-      home: RandomWords(),
+      home: HttpRequester(),
     );
   }
 }
 
+class HttpRequester extends StatefulWidget {
+  @override
+  _HttpRequesterState createState() => _HttpRequesterState();
+}
+
+class _HttpRequesterState extends State<HttpRequester> {
+  var _displayText = 'Starting...';
+
+  Future<String> makeRequest(String url) async {
+    http.Response response;
+    try {
+      print('Request sent. Awaiting return inside makeRequest()...');
+      response = await http.get(url);
+    } catch (e) {
+      print('Failed.');
+      return e.toString();
+    }
+
+    if (response.statusCode == 200) {
+      print('Success!');
+      return convert.jsonDecode(response.body).toString();
+    } else {
+      print('Returned and failed.');
+      print(
+          "Request failed with status: ${response.statusCode}. Body: ${response.body}");
+      return "Request failed with status: ${response.statusCode}. Body: ${response.body}";
+    }
+  }
+
+  void sendRequest(String url) async {
+    _displayText = await makeRequest(url);
+    print('Request is ready. Triggering new build...');
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('Sending request from initialize...');
+    sendRequest("https://gorest.co.in/public-api/users");
+    print('Exiting initialize...');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('Building...');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Http requester'),
+      ),
+      body: Text(_displayText),
+    );
+  }
+}
+
+/*
 class RandomWords extends StatefulWidget {
   @override
   _RandomWordsState createState() => _RandomWordsState();
@@ -103,3 +162,4 @@ class _RandomWordsState extends State<RandomWords> {
     );
   }
 }
+*/

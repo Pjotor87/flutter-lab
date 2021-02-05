@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 //import 'package:english_words/english_words.dart';
 
@@ -29,6 +31,7 @@ class HttpRequester extends StatefulWidget {
 }
 
 class _HttpRequesterState extends State<HttpRequester> {
+  final _url = "https://gorest.co.in/public-api/users";
   var _displayText = 'Starting...';
 
   Future<String> makeRequest(String url) async {
@@ -52,17 +55,19 @@ class _HttpRequesterState extends State<HttpRequester> {
     }
   }
 
-  void sendRequest(String url) async {
-    _displayText = await makeRequest(url);
+  void makeRequestAsync(String url) async {
+    print('Sending request from initialize...');
+    var displayText = await makeRequest(_url);
     print('Request is ready. Triggering new build...');
-    setState(() {});
+    setState(() {
+      _displayText = displayText;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    print('Sending request from initialize...');
-    sendRequest("https://gorest.co.in/public-api/users");
+    makeRequestAsync(_url);
     print('Exiting initialize...');
   }
 
